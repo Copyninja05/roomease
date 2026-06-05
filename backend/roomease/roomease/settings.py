@@ -132,3 +132,4 @@ REST_FRAMEWORK = {
     'DEFAULT_ AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)}
 
 
+AUTH_USER_MODEL='adm.Customer'

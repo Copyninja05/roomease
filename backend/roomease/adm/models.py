@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class Room(models.Model):
@@ -10,7 +11,7 @@ class Room(models.Model):
         ('shared','shared'),
     ]
 
-    owner=models.ForeignKey(User,on_delete=models.CASCADE)
+    owner=models.ForeignKey('Customer',on_delete=models.CASCADE)
     title=models.CharField(max_length=100)
     description=models.TextField()
     room_type=models.CharField(max_length=100,choices=ROOM_TYPES)
@@ -20,8 +21,19 @@ class Room(models.Model):
     is_available=models.BooleanField(default=True)
     created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(upload_to='rooms/',blank=True,null=True)
+    contact_details=models.CharField(max_length=300,null=True)
+    feature=models.TextField(blank=True,null=True)
+    advantages=models.TextField(blank=True,null=True)
+
 
     def __str__(self):
         return self.title
-
+    
+class Customer(AbstractUser):
+    userType=[('provider','provider'),('finder','finder')]
+    user_type=models.CharField(max_length=100,choices=userType,default='customer')
+    phoneNumber=models.CharField(max_length=20,blank=False,null=False)
+    
+    def __str__(self):
+        return self.username
 
