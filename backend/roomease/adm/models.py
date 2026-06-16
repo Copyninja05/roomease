@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 # Create your models here.
 
 class Room(models.Model):
@@ -11,7 +12,7 @@ class Room(models.Model):
         ('shared','shared'),
     ]
 
-    owner=models.ForeignKey('Customer',on_delete=models.CASCADE)
+    owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     title=models.CharField(max_length=100)
     description=models.TextField()
     room_type=models.CharField(max_length=100,choices=ROOM_TYPES)
@@ -24,6 +25,8 @@ class Room(models.Model):
     contact_details=models.CharField(max_length=300,null=True)
     feature=models.TextField(blank=True,null=True)
     advantages=models.TextField(blank=True,null=True)
+    contact_name=models.CharField(blank=True,null=True,max_length=100)
+    contact_number=models.CharField(blank=True,null=True,max_length=20)
 
 
     def __str__(self):
